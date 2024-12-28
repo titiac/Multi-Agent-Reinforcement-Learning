@@ -88,7 +88,7 @@ def run():
                 traj_length = 0
                 memory.clear_memory()
             observation = observation_
-        score_history.append(sum(score)/n_procs)
+        score_history.append(sum(score) / n_procs)
         steps_history.append(total_steps)
         avg_score = np.mean(score_history[-100:])
         print(f'{env_id} Episode {episode} total steps {total_steps}'

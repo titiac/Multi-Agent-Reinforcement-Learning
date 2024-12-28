@@ -40,7 +40,7 @@ class SubprocVecEnv:
         self.waiting = False
         self.closed = False
         nenvs = len(env_fns)
-        mp.set_start_method('forkserver')
+        mp.set_start_method('spawn')
         self.remotes, self.work_remotes = zip(*[mp.Pipe()
                                                 for _ in range(nenvs)])
         self.ps = [mp.Process(target=worker, args=(work_remote, remote,

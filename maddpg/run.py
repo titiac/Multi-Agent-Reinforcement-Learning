@@ -5,6 +5,7 @@ from pettingzoo.mpe import simple_speaker_listener_v4
 
 
 def obs_list_to_state_vector(observation):
+    # Concatenate all observations into a single state vector
     state = np.array([])
     for obs in observation:
         state = np.concatenate([state, obs])
@@ -12,9 +13,15 @@ def obs_list_to_state_vector(observation):
 
 
 def run():
+    # 详见文档 https://pettingzoo.farama.org/environments/mpe/simple_speaker_listener/
+    # 这是一个双智能体环境，一个说话者，一个听众
+    # 说话者的动作空间是3，听众的动作空间是5
+    # 动作空间可以是离散的也可以是连续的， 连续的动作值就是 Box(0.0, 1.0, (3)), Box(0.0, 1.0, (5)) ，第一个变量就是下界，第二个变量是上界，第三个变量是动作的维度
+    # 说话者的观测空间是（3），接收一个三维的向量，听众的观测空间是（11），接收一个十一维的向量
+    # 环境的状态空间为（14），接收一个十四维的向量
     parallel_env = simple_speaker_listener_v4.parallel_env(
             continuous_actions=True)
-    _, _ = parallel_env.reset()
+    _, _ = parallel_env.reset()     # 初始化状态（例如每个智能体的状态）。初始化观测（每个智能体的观测信息）一般使用 _ 表示使用不到的变量
     n_agents = parallel_env.max_num_agents
 
     actor_dims = []
